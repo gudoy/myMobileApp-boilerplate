@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="no-js" id="home-notlogged">
+<head>
+	<meta charset="utf-8" />
+	<title>My Mobile App</title>
+	
+    <meta name="description" content="My super app description">
+    
+
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="cleartype" content="on">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="MySuperApp">
+	
+	<link rel="stylesheet" href="public/css/normalise.css" />    
+	<link rel="stylesheet" href="public/css/app.css" />
+    <link rel="stylesheet" href="public/css/app-320up.css" media="screen and (min-width:320px)" />
+    <link rel="stylesheet" href="public/css/app-480up.css" media="screen and (min-width:480px)" />
+    <link rel="stylesheet" href="public/css/app-800up.css" media="screen and (min-width:800px)" />
+    <link rel="stylesheet" href="public/css/app-1280up.css" media="screen and (min-width:1280px)" />
+    </head>
+<body>
+	<div class="layout page">
+		
+		<header class="header" id="header">
+			<div class="headerHeader">
+				<nav class="main mainNav" id="mainNav">
+					<a class="action backAction hidden" href="#"><span class="label">back</span></a>
+					<ul>
+						<li><a class="action" href="#"><span class="label">item 1</span></a></li>
+						<li><a class="action" href="#"><span class="label">item 2</span></a></li>
+						<li><a class="action" href="#"><span class="label">item 3</span></a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="headerContent"><h1 class="title">Welcome</h1></div>
+			<div class="headerFooter">
+				<nav class="userNav" id="userNav">
+					<a id="logoutAction" class="action logoutAction" href="#"><span class="label">logout</span></a>
+				</nav>
+			</div>
+		</header>
+  		  		
+  		<div class="body" id="body">
+  			<aside class="aside" id="aside">
+  				<header class="header asideHeader"></header>
+  				<div class="asideContent">
+  					Aside content goes here....
+  				</div>
+  				<footer class="asideFooter"></footer>
+  			</aside>
+  			<div class="main">
+  				<header class="header mainHeader">
+  					<a class="action menuAction" href="mainNav"><span class="label">Menu</span></a>
+  					<h2 class="title">Home</h2>
+  				</header>
+  				<div class="mainContent">
+  					Main content goes here....
+  				</div>
+  				<footer class="mainFooter"></footer>
+  			</div>
+		</div>
+		
+		<footer class="footer" id="footer">
+			<header class="header footerHeader" id="footerheader"></header>
+  			<div class="footerContent" id="footerContent"></div>
+  			<footer class="footerFooter" id="footerFooter"></footer>
+		</footer>
+  		  	
+  	</div>
+  	  	
+	<script src="public/js/libs/modernizr.custom.53248.js"></script>
+	<script src="public/js/libs/zepto.js"></script>
+	<script src="public/js/libs/zepto.ghostclick.min.js"></script>
+    <script src="public/js/app.js"></script>
+	<script src="public/js/myMobileApp.js"></script>
+	<script>
+		$(document).ready(function(){ app.init(); myMobileApp.init(); })
+	</script>
+  	
+</body>
+</html>
