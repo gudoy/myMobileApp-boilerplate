@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="no-js offlinePage" id="offlinePage">
+<head>
+	<meta charset="utf-8" />
+	<title>My Mobile App</title>
+	
+	<meta name="description" content="">
+	<meta name="author" content="Guyllaume Doyer">
+	<meta name="keywords" content="" />
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta http-equiv="cleartype" content="on">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="My Mobile App">
+	<meta name="format-detection" content="telephone=no">
+	
+	<link rel="stylesheet" href="public/css/app.css" />
+	<link rel="stylesheet" href="public/css/mymobileapp.css" />
+	<link rel="stylesheet" href="public/css/app-320up.css" media="screen and (min-width:320px)" />
+	<link rel="stylesheet" href="public/css/app-480up.css" media="screen and (min-width:480px)" />
+	<link rel="stylesheet" href="public/css/app-960up.css" media="screen and (min-width:960px)" />
+	<link rel="stylesheet" href="public/css/app-1280up.css" media="screen and (min-width:1280px)" />
+	<link rel="stylesheet" href="public/css/pages/index.css" media="screen" />
+	
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
+	<link rel="apple-touch-icon-precomposed" href="public/media/images/icons/icon.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="public/media/images/icons/touch-icon72x72.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="public/media/images/icons/touch-icon114x114.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="public/media/images/icons/touch-icon144x144.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="512x512" href="public/media/images/icons/touch-icon512x512.png" />
+	<meta name="msapplication-TileImage" content="public/media/images/icons/touch-icon144x144.png" />
+	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="application-name" content="My Mobile App" />
+	
+</head>
+<body>
+	<div class="layout page offline current" id="offline">
+		
+		<header class="header" id="header">
+			<div class="headerHeader" id="headerHeader">
+				<nav class="main mainNav" id="mainNav">
+					<ul>
+						<li class="item navItem lv1"><a class="action homeAction" id="homeAction" href="index.html"><span class="label">Home</span></a></li>
+						<li class="item navItem lv1"><a class="action page1Action" id="page1Action" href="page1.html"><span class="label">Page 1</span></a></li>
+						<li class="item navItem lv1"><a class="action page2Action" id="page2Action" href="page2.html"><span class="label">Page 2</span></a></li>
+						<li class="item navItem lv1"><a class="action page3Action" id="page3Action" href="page3.html"><span class="label">Page 3</span></a></li>
+						<li class="item navItem lv1"><a class="action page4Action" id="page4Action" href="page4.html"><span class="label">Page 4</span></a></li>
+						<li class="item navItem lv1"><a class="action page5Action" id="page5Action" href="page5.html"><span class="label">Page 5</span></a></li>				
+					</ul>
+				</nav>
+			</div>
+			<div class="headerContent" id="headerContent"></div>
+			<div class="headerFooter" id="headerFooter"></div>
+		</header>
+  		  		
+  		<div class="body" id="body">
+  			<aside class="aside" id="aside">
+  				<header class="header asideHeader"></header>
+  				<div class="asideContent" id="asideContent">
+  					Aside content goes here....
+  				</div>
+  				<footer class="asideFooter"></footer>
+  			</aside>
+  			<div class="main" id="main">
+  				<header class="header mainHeader" id="mainHeader">
+  					<a id="menuAction" class="action menuAction" href="#mainNav"><span class="label">Menu</span></a>
+  					<h2 class="title">Offline</h2>
+					<nav class="userNav" id="userNav">
+						<a id="logoutAction" class="action logoutAction" href="#"><span class="label">logout</span></a>
+						<a id="refreshAction" class="action refreshAction"><span class="label">refresh</span></a>
+					</nav>
+  				</header>
+  				<div class="mainContent" id="mainContent">
+  					Main content goes here....
+  				</div>
+  				<footer class="mainFooter" id="mainFooter"></footer>
+  			</div>
+		</div>
+		
+		<footer class="footer" id="footer">
+			<header class="header footerHeader" id="footerheader"></header>
+  			<div class="footerContent" id="footerContent"></div>
+  			<footer class="footerFooter" id="footerFooter"></footer>
+		</footer>
+  		  	
+  	</div>
+  	  	
+	<script src="public/js/libs/modernizr/modernizr.custom.88476.js"></script>
+	<script>document.write('<script src=public/js/libs/frameworks/' + ('__proto__' in {} ? 'zepto' : 'jquery') + '.min.js><\/script>')</script>
+	<script>document.write('<script src=public/js/libs/history/' + ('__proto__' in {} ? 'zepto' : 'jquery') + '.history.js><\/script>')</script>
+	<script src="public/js/libs/frameworks/zepto.ghostclick.min.js"></script>
+	<script src="public/js/libs/scrolling/ZyngaScroller/Animate.js"></script>
+	<script src="public/js/libs/scrolling/ZyngaScroller/EasyScroller.js"></script>
+	<script src="public/js/libs/scrolling/ZyngaScroller/Scroller.js"></script>
+	<script src="public/js/app.js"></script>
+	<script src="public/js/myMobileApp.js"></script>
+	<script src="public/js/pages/index.js"></script>
+	<script>
+		$(document).ready(function(){ app.init(); })
+	</script>
+  	
+</body>
+</html>
