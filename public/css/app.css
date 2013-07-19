@@ -145,7 +145,7 @@ html.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener { height:auto; }
 #basketSummary,
 .ui-dialog { -webkit-transition:.28s -webkit-transform cubic-bezier(0.000, 0.720, 0.320, 1.000); transition:.28s transform cubic-bezier(0.000, 0.720, 0.320, 1.000); }
 
-#header,
+#header 								{ -webkit-transform:translateX(-270px); transform:translateX(-270px); }
 #header.active + #body,
 #header.active + #body #basketSummary,
 .ui-dialog.activeHeader 				{ -webkit-transform:translateX(270px); transform:translateX(270px); }
