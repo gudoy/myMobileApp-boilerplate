@@ -1,4 +1,4 @@
-app.home =
+app.offline =
 {
 	//alwaysReInit: true, // Special case: We want the init method to be fire everytime the page is loaded 
 	

@@ -1,8 +1,7 @@
-@viewport 
-{
-	width:device-width;
-	zoom:1;
-}
+@-webkit-viewport { width:device-width; zoom:1; }
+@-moz-viewport { width:device-width; zoom:1; }
+@-ms-viewport { width:device-width; zoom:1; }
+@viewport { width:device-width; zoom:1; }
 
 * { 
 	-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;
@@ -89,8 +88,6 @@ html.loading body > .page,
 .no-flexbox.gecko .page > .body { width:100%; height:100%; } /* Required to force Gecko using the full page dimensions */
 /* Flexbox legacy (end) */
 
-
-
 /* Flexbox (start) */
 html .page,
 html .page > .body,
@@ -107,20 +104,25 @@ html .body > .main { display:-webkit-flex; display:-ms-flexbox; display:flex; }
 .mainContent { min-height:1px; } /* Fix required to force webkit displaying the scrollbar (if any) */
 /* Flexbox (end) */
 
-
-
 /* No Flexbox (start) */
 /*
 .no-flexbox.no-flexboxlegacy #body { height:100%; overflow-y:auto; }
 .no-flexbox.no-flexboxlegacy.mobile .page { overflow-y:auto; }
 .no-flexbox.no-flexboxlegacy #header { min-height:100%; height:auto; }
-.no-flexbox.no-flexboxlegacy.no-csstransforms #header.active + #body { margin-left:140px; }
 
 html.no-flexbox.no-flexboxlegacy.mobile { height:auto; }
 .no-flexbox.no-flexboxlegacy.mobile body { min-height:calc(100%); }
 .no-flexbox.no-flexboxlegacy.mobile .page { height:auto; position:static; }
 .no-flexbox.no-flexboxlegacy.mobile #body { height:auto; }
-/
+*/
+
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener body { height:100%;  }
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener .page { overflow-y:auto; }
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body { overflow:auto; }
+
+html.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener { height:auto; }
+.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener body { height:auto; }
+.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener .page { height:auto; position:relative; }
 /* No Flexbox (end) */
 
 
@@ -135,30 +137,69 @@ html.no-flexbox.no-flexboxlegacy.mobile { height:auto; }
 /* Main Nav : Offcanvas pattern (end) */
 
 
+/* Main Nav : Offcanvas pattern (start) */
+#header { width:100%; max-width:270px; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; position:absolute; left:0; top:0; /*z-index:3;*/ }
+#body { min-height:100%; max-height:100%; z-index:2; }
+#header,
+#body,
+#basketSummary,
+.ui-dialog { -webkit-transition:.28s -webkit-transform cubic-bezier(0.000, 0.720, 0.320, 1.000); transition:.28s transform cubic-bezier(0.000, 0.720, 0.320, 1.000); }
+
+#header,
+#header.active + #body,
+#header.active + #body #basketSummary,
+.ui-dialog.activeHeader 				{ -webkit-transform:translateX(270px); transform:translateX(270px); }
+#header.active 							{ -webkit-transform:translateX(0); transform:translateX(0); }
+
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body,
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header.active { left:0; }
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header,
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body.active { left:270px; }
+/* Main Nav : Offcanvas pattern (end) */
+
+
 
 /* Pages Transitions / Animations (start) */
 body { position:relative; }
 .page { position:absolute; top:0; bottom:0; left:0; right:0; }
+.gecko .page { transform:none; } /* Fix a bug where fixed positions are not correct when translate transforms are used */
 .page.animating { -webkit-transition:1s ease-out; transition:1s ease-out; -webkit-transition-property:-webkit-transform, opacity; transition-property:transform, opacity; }
 .page.current { z-index:1; }
 .page.off {  }
 
-.slideupin.off { -webkit-transform:translateY(100%); -moz-transform:translateY(100%); transform:translateY(100%); z-index:1; }
-.slideupin { -webkit-transform:translateY(0); -moz-transform:translateY(0); transform:translateY(0); }
+.slideupin.off 		{ -webkit-transform:translateY(100%); transform:translateY(100%); z-index:1; }
+.slideupin 			{ -webkit-transform:translateY(0); transform:translateY(0); }
 
-.slidedownin.off { -webkit-transform:translateY(-100%); -moz-transform:translateY(-100%); transform:translateY(-100%); }
-.slidedownin { -webkit-transform:translateY(0); -moz-transform:translateY(0); transform:translateY(0); }
+.slidedownin.off 	{ -webkit-transform:translateY(-100%); transform:translateY(-100%); }
+.slidedownin 		{ -webkit-transform:translateY(0); transform:translateY(0); }
 
 .slidedownout.off,
-.slideupout.off { -webkit-transform:translateY(0); -moz-transform:translateY(0); transform:translateY(0);  }
+.slideupout.off 	{ -webkit-transform:translateY(0); transform:translateY(0);  }
 .slidedownout,
-.slideupout { -webkit-transform:translateY(100%); -moz-transform:translateY(100%); transform:translateY(100%); z-index:1; }
+.slideupout 		{ -webkit-transform:translateY(100%); transform:translateY(100%); z-index:1; }
 
-.fadein.off { opacity:0; }
-.fadein { opacity:1; }
+.fadein,
 .fadeout.off { opacity:1; }
-.fadeout { opacity:0; }
+.fadeout,
+.fadein.off { opacity:0; }
 /* Pages transitions (end) */ 
+
+
+/* Android specific (start) */
+.android .action,
+.android .action:focus { -webkit-tap-highlight-color: rgba(255, 255, 255, 0)!important; }
+.android[data-osvMajor="2"] .action { outline:none!important; -webkit-tap-highlight-color: rgba(255, 255, 255, 0)!important; } /* remove the horrible orange border on focused links */
+.android[data-osvMajor="2"] .action:focus { outline:none!important; -webkit-tap-highlight-color: rgba(255, 255, 255, 0)!important; } /* remove the horrible orange border on focused links */
+/* Android specific (remove) */
+
+
+ /* IE specific (start) */
+.ie.mobile #header { visibility:hidden; } /* Bugfix for IE in Windows Phone 7 & 8 where main nav item remain clickable even while the menu is behind the page */
+.ie.mobile #header.active { visibility:visible; } /* Bugfix for IE in Windows Phone 7 & 8 where main nav item remain clickable even while the menu is behind the page */
+
+.ie .action { border-radius:0; }
+/* IE specific (end) */
+
 
 
 /* For blackberry & likes width a screen resolution smaller than 320*240px */

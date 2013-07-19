@@ -45,17 +45,6 @@ var app =
         init: function()
         {
         	this.hasOverflowScroll();
-        	
-//alert(Modernizr.flexbox)
-//alert(Modernizr.flexboxlegacy)
-//alert(app.browserVersion.major);
-        	
-        	/*
-			// Chrome 18 returns true for flexbox support (whereas it doesn't). Bug on Chrome or Modernizr????    		
-			if ( app.browser === 'chrome' && app.browserVersion.major < 25 )
-			{
-				$('html').removeClass('flexbox').addClass('no-flexbox');
-			}*/
 			
 			return this;	
         },
@@ -172,12 +161,12 @@ var app =
 		// Blackberry 10 no longer contains the blackberry string 
 		else if ( app.platform === 'bb10' )									{ app.platform = "blackberry"; }
 		// 
-		else if ( app.platform === 'tizen' )	{ app.browser = "tizenBrowser"; } 
+		else if ( app.platform === 'tizen' )								{ app.browser = "tizenBrowser"; } 
 		
         // Look for os
         if      ( /ip(hone|ad|od)/.test(app.platform) ) 				{ app.os = 'ios'; }
         else if ( app.platform === 'android' ) 							{ app.os = 'android'; }
-        else if ( app.platform === 'windows phone' ) 					{ app.os = 'wpos'; }
+        else if ( app.platform === 'windowsphone' ) 					{ app.os = 'wpos'; }
         else if ( app.platform === 'blackberry' ) 						{ app.os = 'bbos'; }
         else if ( app.platform === 'windows' ) 							{ app.os = 'windows'; }
         else if ( app.platform === 'macosxx' ) 							{ app.os = 'macos'; }
@@ -213,14 +202,10 @@ var app =
 
         // Get viewport dimensions        	
         app.pixelRatio 		= window.devicePixelRatio || 1;
-        //app.vw 				= Math.round(window.outerWidth/app.pixelRatio);
-        app.vw 				= Math.round(window.outerWidth);
-        //app.vh 				= Math.round(window.outerHeight/app.pixelRatio);
+        app.vw 				= window.outerWidth !== undefined ? Math.round(window.outerWidth) : window.screen.width;
         app.vh 				= Math.round(window.outerHeight);
-        
-//alert(window.outerWidth);
-//alert(app.pixelRatio);
-        
+        app.vh 				= window.outerHeight !== undefined ? Math.round(window.outerHeight) : window.screen.height;
+                
         // Get or test some usefull properties 
         app.device 			= { 'screen':{w:window.screen.width, h:window.screen.height} };
         app.isSimulator 	= ua.indexOf('XDeviceEmulator') > -1;
@@ -232,7 +217,6 @@ var app =
         
 		var attrs 	= {},
 			classes = '',
-			//props 	= ['platform', 'os', 'engine', 'browser', 'pixelRatio', 'vw','vh'],
 			props 	= ['platform', 'os', 'engine', 'browser'],
 			tests 	= ['simulator','standalone','retina','mobile','desktop'],
 			vtests 	= {'os':'os', 'browser':'b'};

@@ -20,6 +20,12 @@
 // [1] https://developers.google.com/mobile/articles/fast_buttons#ghost
 (function ($) {
 
+	// Added by Gudoy: prevent error in IE < 9
+	window.addEventListener = window.addEventListener || function(){};
+	
+	// Added by Gudoy: do not continue any longer if touch event are not supported
+	if ( !'ontouchstart' in document.documentElement ){ return; }
+
     // The space-time coordinates in space-time of the most recent touchend
     // event.  Because touchend doesn't itself have any coordinates, we need to
     // maintain x and y ourselves by listening on touchstart and touchmove.
