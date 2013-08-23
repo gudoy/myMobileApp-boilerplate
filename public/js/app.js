@@ -1,32 +1,4 @@
-/*
-window.log = function()
-{
-    //TODO: only activate logs in DEV env?
-    
-    if ( this.console ){ console.log(arguments); }
-    
-    $('#consoleLogs').prepend('<p class="log">' + arguments[0] + '</p>');
-    
-};*/
-//window.console = function(){ window.console ? window. || winlog(); }
-
-if ( typeof window.console === "undefined" )
-//{ window.console = {log: window.log()} ; }
-{
-	window.console = {
-		log:function(str){
-			if ( navigator.debugConsole ){ navigator.debugConsole.log(str); }
-			else
-			{
-				// In case log messages are received before device ready
-				//window.external.Notify("Info:" + str);
-			}
-		}
-	};
-}
-
-
-(function(){
+;(function(){
 "use strict";
 var app = 
 {
@@ -37,7 +9,8 @@ var app =
     	
     	hideUrlBar: true,
     	//fullscreen: true
-    	allowFullScreen: true
+    	allowFullScreen: true,
+    	useUrlRewriting: false
     },
     
     support:
@@ -69,12 +42,12 @@ var app =
         	.sniff() 				// Will try to detect things like os, platform, engine, browser, ... and some others
         	.handleOrientation() 	// Will handle orientation change 
     		.makeFullScreen() 		// Will force the app to use the full size of the screen and hide the url bar
-    		.preventBouncing() 		//
+    		.preventBouncing(); 		//
     	
     	// For iOS and Android > 4, do it also when the orientation change 
         if ( app.os === 'ios' )
         {
-			$window.on('orientationchange', function(){ self.makeFullScreen(); })
+			$window.on('orientationchange', function(){ self.makeFullScreen(); });
         }
     	// For iOS and Android > 4 
         else if ( app.os === 'android' && app.osVersion.major >= 4 )
@@ -83,10 +56,10 @@ var app =
         	// But it seems not to reliabily updates the window dimensions after the orientation changed. So we cannot use it safely for the moment
         	// Instead, fallback using the resize event
 			//$window.on('orientationchange', function(){ self.makeFullScreen(); })
-        	$window.on('resize', function(){ self.makeFullScreen(); })
+        	$window.on('resize', function(){ self.makeFullScreen(); });
 			
 			// Required for Android < 4.1
-			if ( app.osVersion.minor == 0 ){ $window.on('load', function(){ self.makeFullScreen(); }) }
+			if ( app.osVersion.minor == 0 ){ $window.on('load', function(){ self.makeFullScreen(); }); }
         }
         // But for Android < 4 that does not support this event, use the resize event instead
         else if ( app.os === 'android' && app.osVersion.major < 4 )
@@ -99,7 +72,7 @@ var app =
     				// With a smaller delay, the user will no longer be able to display the url bar
     				//window.setTimeout(function(){ self.makeFullScreen(); }, 1);
     				window.setTimeout(function(){ self.makeFullScreen(); }, 1000);
-    			})
+    			});
         }
         
         this.support.init();
@@ -115,22 +88,21 @@ var app =
         this.transEndEvent   	= 'webkitTransitionEnd transitionend';
         
         // 
-        $window.on('resize', function(){ app.vw = Math.round(window.outerWidth/app.pixelRatio); })
+        $window.on('resize', function(){ app.vw = Math.round(window.outerWidth/app.pixelRatio); });
         
         return this;
     },
     
     sniff: function()
     {
-//alert(navigator.userAgent);
 		var ucfirst 		= function(str){ return str.substr(0,1).toUpperCase() + str.substr(1,str.length); },
 			pad 			= function(arr,s,v){ var l = s - arr.length; for (var i = 0; i<l; i++){ arr.push(v); } return arr; }, 
         	ua 				= navigator.userAgent || 'unknown',
             classes 		= '',
             checks 			= ['platform','browser','engine','os','osVersion','browserVersion'],
-            platforms 		= ['iPhone','iPad','iPod','android','Android','Windows Phone','Windows', 'Mac OS X','Linux','BlackBerry','BB10','Bada','webOS','Tizen'],
+            platforms 		= ['iPhone','iPad','iPod','android','Android','Windows Phone','Windows',' Mac','Tizen','Linux','BlackBerry','BB10','Bada','webOS'],
             engines 		= {'AppleWebKit':'Webkit','Blink':'Blink', 'Gecko':'Gecko','Trident':'Trident','MSIE':'Trident','Presto':'Presto','BlackBerry':'Mango','wOSBrowser':'Webkit'}, 
-            browsers 		= {'Chrome':'Chrome','CriOS':'Chrome','Firefox':'Firefox','BlackBerry':'BB Browser', 'BB10':'BB Browser', 'Safari':'Safari','Opera':'Opera','OPR':'Opera','MSIE':'IE','Dolfin':'Dolfin','Silk':'Amazon Silk'},
+            browsers 		= {'OPR':'Opera','Chrome':'Chrome','CriOS':'Chrome','Firefox':'Firefox','BlackBerry':'BB Browser', 'BB10':'BB Browser', 'Safari':'Safari','Opera':'Opera','MSIE':'IE','Dolfin':'Dolfin','Silk':'Amazon Silk'},
             version 		= {'full': '?', 'major': '?', 'minor': '?', 'build': '?', 'revision': '?'},
             vRegExp 		= {
                 'default': '.*(default)\\/([0-9\\.]*)\\s?.*',
@@ -145,7 +117,7 @@ var app =
             	'ios': '.*CPU\\s(?:iPhone\\s)?OS\\s([\\d\\_]*)\\s.*',
             	'wpos': '.*Windows\\sPhone\\s(?:OS\\s)?([\\d\\.]*)\\;.*',
             	'bbos': '.*Version\\/([0-9\\.]*)\\s?.*'
-            }
+            };
 
         // Set Default values
         for (var i=0, l=checks.length; i<l; i++)    { var k = checks[i]; app[k] = 'unknown' + ucfirst(k); }
@@ -157,11 +129,13 @@ var app =
 
 		// Specific cases
 		// Android stock browser UA may include "Mobile Safari" while it's not
-		if 		( app.platform === 'android' && app.browser === 'safari' )	{ app.browser = "stockBrowser"; }
+		if 		( app.platform === 'android' && app.browser === 'safari' )	{ app.browser = 'stockBrowser'; }
 		// Blackberry 10 no longer contains the blackberry string 
-		else if ( app.platform === 'bb10' )									{ app.platform = "blackberry"; }
-		// 
-		else if ( app.platform === 'tizen' )								{ app.browser = "tizenBrowser"; } 
+		else if ( app.platform === 'bb10' )									{ app.platform = 'blackberry'; }
+		// Tizen browser (based on Chromium) has nothing specific its UA
+		else if ( app.platform === 'tizen' )								{ app.browser = 'tizenBrowser'; }
+		// Tizen emulator has not even the 'Tizen' platform string in its UA 
+		else if ( typeof tizen !== 'undefined' )							{ app.platform = 'tizen'; }
 		
         // Look for os
         if      ( /ip(hone|ad|od)/.test(app.platform) ) 				{ app.os = 'ios'; }
@@ -169,7 +143,7 @@ var app =
         else if ( app.platform === 'windowsphone' ) 					{ app.os = 'wpos'; }
         else if ( app.platform === 'blackberry' ) 						{ app.os = 'bbos'; }
         else if ( app.platform === 'windows' ) 							{ app.os = 'windows'; }
-        else if ( app.platform === 'macosxx' ) 							{ app.os = 'macos'; }
+        else if ( app.platform === 'mac' ) 								{ app.os = 'macos'; }
 		else if ( app.browser === 'firefox' && app.os !== 'android' ) 	{ app.os = 'firefoxos'; }
 
         // Try to get the browser version data
@@ -258,9 +232,9 @@ var app =
         // And when it changes, get the new one
         $(window).on('orientationchange', function(e)
         {
-        	getOrient(); 
+        	getOrient();
         	updateClasses();
-        })
+        });
         
         return this;
     },
@@ -279,7 +253,7 @@ var app =
 			isWebapp 	= $html.hasClass('webapp');
 
         // On iOS
-        if ( app.os === 'ios' && !location.hash )
+        if ( app.os === 'ios' && !location.hash && app.orientation )
         {
         	// On iPad, the url bar can't be hidden
         	if ( app.platform === 'ipad' ){ return this; }
@@ -312,7 +286,7 @@ var app =
 
 			// Removing the overflow:hidden on the html seems to be required on some devices (ex: Motorola Atrix)
 			// for the page to be scrolled
-			if ( app.osVersion.major < 4 && !$html.hasClass('fullscreenfix') ){ $html.addClass('fullscreenfix') }
+			if ( app.osVersion.major < 4 && !$html.hasClass('fullscreenfix') ){ $html.addClass('fullscreenfix'); }
 	        	
         	// Prevent getting the proper size more than once for each orientation by storing the value for re-use
         	if 	( !this.fullSize[app.orientation].h )
@@ -369,30 +343,7 @@ var app =
     },
     
     preventBouncing: function()
-    {
-/*
-$('window')
-	.on('touchmove', function(e){ e.stopPropagation(); })
-        
-$('#main, #body, .page, body')
-	.on('touchmove', function(e){ e.stopPropagation(); })
-	//.on('touchend', function(e){ e.stopPropagation(); })
-	//.on('touchcancel', function(e){ e.stopPropagation(); })
-*/
-  
-$(document)
-	.on('touchmove', function(e)
-	{
-//alert( e.target.type )
-		//if ( e.target.type === 'range' ){ return; }
-		//e.preventDefault();
-	})
-$('#mainContent')
-	//.on('touchstart', function(e){ e.stopPropagation(); })
-	//.on('touchmove', function(e){ e.stopPropagation(); })
-	//.on('touchend', function(e){ e.stopPropagation(); })
-	//.on('touchcancel', function(e){ e.stopPropagation(); })
-    	
+    {    	
     	return this;
     },
     
@@ -475,11 +426,11 @@ $('#mainContent')
 				var pW 		= $p.width(), 										// parent width
 					pH 		= $p.height(), 										// parent height
 					pVPad 	= (parseInt($p.css('padding-top'), 10) || 0) 
-								+ (parseInt($p.css('padding-bottom'), 10) || 0) // parent vertical padding
+								+ (parseInt($p.css('padding-bottom'), 10) || 0); // parent vertical padding
 					
 				//scroller.scroller.setDimensions(pW, pH, $p[0].scrollWidth, $p[0].scrollHeight);
 				scroller.scroller.setDimensions(pW, pH, $p[0].scrollWidth, $p[0].scrollHeight + pVPad);					
-			})
+			});
 		
 		return this;
 	},
@@ -500,7 +451,7 @@ $('#mainContent')
                     actions:{},     // params: url, label, title, id, target
                     modal: false,    // 
                     msg: null
-                },args[0] || {})
+                },args[0] || {});
             
             if ( !o.msg ){ return this; }
             
@@ -516,7 +467,7 @@ $('#mainContent')
 			args 	= arguments || [],
 			to 		= args[0] || null,
 			o 		= $.extend({
-				transition: 'fadein fadeout'
+				transition: 'fadeout fadein'
 			}, args[1] || {}),
 			$html 			= $('html'),
 			$body 			= $('body'),
@@ -525,7 +476,7 @@ $('#mainContent')
 			$cur 			= $body.children('.page.current');
 			
 		// Do not continue any longer if no valid url has been passed
-		if ( !to ){ return; }		
+		if ( !to ){ return; }
 		
 		$.ajax(
 		{
@@ -551,7 +502,7 @@ $('#mainContent')
 							self[pgId].init.apply(self[pgId]);
 							self[pgId].inited = true;
 						}
-					} 
+					};
 				
 				// Do not continue any longer if no page has been found
 				if ( !$pg.length ){ return; }
@@ -589,7 +540,7 @@ $('#mainContent')
 
 							initPage();
 						}
-					}
+					};
 					
 					// Insert the script in the page
 					$('head').append(pgjs);
@@ -602,25 +553,21 @@ $('#mainContent')
 					trans 		= [ (tmp[0] && tmp[0] !== 'none' ? tmp[0] : null), (tmp[1] && tmp[1] !== 'none' ? tmp[1] : null)],
 					callback 	= function()
 					{
-						// Cache some page data
-						//self.$page 	= $pg;
-						//self.pgid 	= pgId; 
-						
 						// Update html classes & id
 						$('html').removeClass(curPgId + 'Page').addClass(pgId + 'Page').attr('id', pgId  + 'Page');
 						
 						// Update history
-						// !!! note the 'H' (uppercased) here: do not use native history (lowercase) but rely on history.js polyfill !!!
 						// Using HTML5 default History API
 						//if ( Modernizr.hashchange )
 						if ( history.pushState )
 						{
-							//window.history.pushState(null, null, pgId + '.html');
-							window.history.pushState(null, null, pgId);
+							//window.history.pushState(null, null, pgId + ( app.conf.useUrlRewriting ? '' : '.html' ));
+							window.history.pushState(null, null, ( app.conf.useUrlRewriting ? pgId : to ));
 						}
 						// Using History.js Polyfill
 						else
 						{
+							// !!! note the 'H' (uppercased) in 'History' here: do not use native history (lowercase) but rely on history.js polyfill
 							//window.History.pushState({}, pgId, pgId + '.html');
 							//window.History.pushState({}, pgId, pgId + '.html');
 						}
@@ -636,26 +583,25 @@ $('#mainContent')
 						app.pages.prev 		= app.pages.prev || {};  
 						app.pages.url 		= window.location.url; 
 						app.pages.prev.html = $cur.remove();
-					}
+					};
 
 				$cur.removeClass('current').addClass('previous');
 					
 				// If at least 1 page is transitioned
-				//if ( trans[0] || trans[1] )
 				if ( Modernizr.csstransitions && (trans[0] || trans[1]) )
 				{
 					var $transPg = trans[1] ? $pg : $cur;
 					
 					// When page(s) transition ends
-					$transPg.off(app.transEndEvent).on(app.transEndEvent, function(e){ callback();})
+					$transPg.off(app.transEndEvent).on(app.transEndEvent, function(e){ callback();});
 					
 					// Prepare transition on current & new current pages
 					if ( trans[0] ){ $cur.addClass(trans[0] + ' off'); }
 					if ( trans[1] ){ $pg.addClass(trans[1] + ' off'); }
 					
 					// Trigger transitions on current & new current pages
-					// force reflow before addin the 'in' class (to force transition)
-					$pg.css('left')
+					// force reflow before adding the 'animating' class (to force transition)
+					$pg.css('left');
 					$cur.addClass('animating').removeClass('off');
 					$pg.addClass('animating').removeClass('off');					
 				}
@@ -680,4 +626,4 @@ $('#mainContent')
 // Expose App to the global object
 window.app = app;
 
-})()
+})();

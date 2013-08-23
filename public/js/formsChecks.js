@@ -17,10 +17,10 @@ var CHECKS =
 	ccgroup:		function(jqObject){ return CHECKS.test(jqObject, /^[0-9]{4}$/i); },
 	ccnumber:		function(jqObject){ return CHECKS.test(jqObject, /^[0-9]{16}$/i); },
 	cccrypto:		function(jqObject){ return CHECKS.test(jqObject, /^[0-9]{3}$/i); },
-	checked:		function(jqObject){ return jqObject.attr('checked') },
+	checked:		function(jqObject){ return jqObject.attr('checked'); },
 	
 	//phone_1:		function(jqObject){	return jqObject.val() !== '06') && CHECKS.test(jqObject, /^((06)\d{8})$/); },
-	notEmpty:		function(jqObject){ return jqObject.val() !== '' },
+	notEmpty:		function(jqObject){ return jqObject.val() !== ''; },
 	selectOne:		function(jqObject){ return $('option:selected', jqObject).not('.notCorrectValue').length > 0 && $('option:selected', jqObject).val() !== ''; },
 	
 	test: function(jqObject, rule) { return rule.test(jqObject.val()); }
@@ -88,7 +88,7 @@ var FORM =
 			p 			= jqObject.closest('.fieldBlock'); 					// Get the parent field block of this field
 
 			// Get the id of the field or create one
-			fieldId 	= jqObject.attr('id') || jqObject.attr('id', (new Date()).getTime())
+			fieldId 	= jqObject.attr('id') || jqObject.attr('id', (new Date()).getTime());
 
 		FORMS[formId].fields 	= {};
 		FIELDS[fieldId] 		= { isInited:false };
@@ -98,7 +98,7 @@ var FORM =
 			.focus(function(e) 	{ p.addClass('focused'); self.check(jqObject); })
 			.blur(function(e) 	{ p.removeClass('focused'); self.check(jqObject); })
 			.click(function(e) 	{ if( jqObject.is(':checkbox, :radio') ) { self.check(jqObject); } })
-			.keyup(function(e) 	{ self.check(jqObject); })				
+			.keyup(function(e) 	{ self.check(jqObject); });
 		
 		return this;
 	},
@@ -172,9 +172,9 @@ var FORM =
 			mess		= notValidCheck !== null && notValidCheck != '' 					// Message to display
 							? eval('CONFIG.' + notValidCheck + '_err')
 							: '',
-			p 			= jqObject.closest('.fieldBlock'); 									// Get the parent field block of this field
+			p 			= jqObject.closest('.fieldBlock'), 									// Get the parent field block of this field
 			htmlTooltip	= '<span class="detail ' + status + 'Detail">' + mess + '</span>', 	// Tooltip html code
-			f 			= FIELDS[fieldId] || {}
+			f 			= FIELDS[fieldId] || {};
 			
 		$('#' + id).addClass(status).append(htmlTooltip);
 		

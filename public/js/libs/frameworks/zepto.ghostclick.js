@@ -71,10 +71,22 @@
             // swipe)
             space_threshold = 30;
 
+//alert(e.target.nodeName);
+        
         if (new Date() - t <= time_threshold &&
             Math.abs(e.clientX - x) <= space_threshold &&
             Math.abs(e.clientY - y) <= space_threshold) {
-
+ 
+// Added by gudoy: 
+if ( !!window.app && !!app.platform && app.platform === 'tizen')
+{
+	var filter = 'input,label',
+		$t  = $(e.target),
+		$p 	= $t.parent();
+	
+	if ( $t.is(filter) || $p.is(filter) || $p.parent().is(filter) ){ return; }
+}
+        	
             e.stopPropagation();
             e.preventDefault();
         }

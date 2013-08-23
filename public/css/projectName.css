@@ -26,13 +26,10 @@
 /* Colors & Gradients (start) */
 .header
 {
-  background:#f2f2f2;
+  background-color:#f2f2f2;
   background:-webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#c9c9c9));
-  background:-webkit-linear-gradient(#f2f2f2, #c9c9c9 100%);
-  background:    -moz-linear-gradient(#f2f2f2, #c9c9c9 100%);
-  background:     -ms-linear-gradient(#f2f2f2, #c9c9c9 100%);
-  background:      -o-linear-gradient(#f2f2f2, #c9c9c9 100%);
-  background:         linear-gradient(#f2f2f2, #c9c9c9 100%);
+  background:-webkit-linear-gradient(#f2f2f2, #c9c9c9);
+  background:         linear-gradient(#f2f2f2, #c9c9c9);
 }
 /* Colors & Gradients (end) */
 
@@ -68,6 +65,33 @@
 
 /* No Flexbox (start) */
 /* No Flexbox (end) */  
+
+
+/* Main Nav : Offcanvas pattern (start) */
+/*
+#header { width:240px; height:100%; max-width:240px; position:absolute; left:0; top:0; z-index:1; visibility:hidden; z-index:3; visibility:visible; -webkit-transform:translateX(-240px); -webkit-transition:.12s -webkit-transform ease-in-out; }
+#header.active { -webkit-transform:translateX(0); }
+#body { -webkit-transition:.12s -webkit-transform ease-in-out; -moz-transition:.24s -moz-transform ease-in-out; transition:.24s transform ease-in-out; -webkit-transform:translateX(0); -moz-transform:translateX(0); transform:translateX(0); z-index:2; }
+#header.active + #body { -webkit-transform:translateX(240px); -moz-transform:translateX(240px); -ms-transform:translateX(240px); transform:translateX(240px); }
+*/
+/* Main Nav : Offcanvas pattern (end) */
+
+
+/* Main Nav : Offcanvas pattern (start) */
+#header { width:100%; max-width:270px; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; position:absolute; left:0; top:0; /*z-index:3;*/ }
+#body { min-height:100%; max-height:100%; z-index:2; }
+#header,
+#body { -webkit-transition:.28s -webkit-transform cubic-bezier(0.000, 0.720, 0.320, 1.000); transition:.28s transform cubic-bezier(0.000, 0.720, 0.320, 1.000); }
+
+
+#header.active + #body 			{ -webkit-transform:translateX(270px); transform:translateX(270px); }
+#header.active 					{ -webkit-transform:translateX(0); transform:translateX(0); }
+
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body,
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header.active { left:0; }
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header,
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body.active { left:270px; }
+/* Main Nav : Offcanvas pattern (end) */
 
 
 

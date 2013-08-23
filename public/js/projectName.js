@@ -1,8 +1,8 @@
-var app = $.extend(app || {}, 
+window.app = $.extend(window.app || {},  
 {
 	init: function()
 	{
-		// Prepage page (sniff browser, platform, os ..., handle orientation, ...)
+		// Prepare page (sniff browser, platform, os ..., handle orientation, ...)
 		this.prepare();
 		
 		// Init navigation
@@ -47,7 +47,7 @@ var app = $.extend(app || {},
 				
 				$header[ isActive ? 'removeClass' : 'addClass' ]('active');
 				$body[ isActive ? 'removeClass' : 'addClass' ]('active');
-			})
+			});
 		
 		return this;
 	}

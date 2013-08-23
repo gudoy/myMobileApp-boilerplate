@@ -36,7 +36,7 @@ canvas { max-width:100%; }
 .hidden,
 .tpl { display:none!important; }
 
-.notransition { -webkit-transition:none!important; -moz-transition:none!important; -o-transition:none!important; transition:none!important; }
+.notransition { -webkit-transition:none!important; transition:none!important; }
 
 .clearfix1:after { height:0; clear:both; content:' '; display:block; visibility:hidden; }
 
@@ -55,7 +55,8 @@ html, body { width:100%; overflow:hidden; overflow-x:hidden; -webkit-text-size-a
 html { height:100%; overflow-y:hidden; }
 body { margin:0; padding:0; }/* on iOS, using a height:100% has a side effect when an element (#bodyContent) contains video elements and has -webkit-overflow-scrolling:touch; */
 html.desktop body { height:100%; }
-html.mobile:not(ios) body { height:100%; } 
+/*html.mobile:not(ios) body { height:100%; }*/
+html:not(ios) body { height:100%; }
 
 .page { width:100%; height:100%; overflow-y:hidden; overflow-x:hidden; position:relative; -webkit-transform:translate3d(0, 0, 0); transform:translate3d(0, 0, 0); }
 
@@ -105,20 +106,9 @@ html .body > .main { display:-webkit-flex; display:-ms-flexbox; display:flex; }
 /* Flexbox (end) */
 
 /* No Flexbox (start) */
-/*
-.no-flexbox.no-flexboxlegacy #body { height:100%; overflow-y:auto; }
-.no-flexbox.no-flexboxlegacy.mobile .page { overflow-y:auto; }
-.no-flexbox.no-flexboxlegacy #header { min-height:100%; height:auto; }
-
-html.no-flexbox.no-flexboxlegacy.mobile { height:auto; }
-.no-flexbox.no-flexboxlegacy.mobile body { min-height:calc(100%); }
-.no-flexbox.no-flexboxlegacy.mobile .page { height:auto; position:static; }
-.no-flexbox.no-flexboxlegacy.mobile #body { height:auto; }
-*/
-
 .no-flexbox.no-flexboxlegacy.no-flexboxtweener body { height:100%;  }
 .no-flexbox.no-flexboxlegacy.no-flexboxtweener .page { overflow-y:auto; }
-.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body { overflow:auto; }
+.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body { overflow:visible; }
 
 html.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener { height:auto; }
 .ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener body { height:auto; }
@@ -126,46 +116,20 @@ html.ie.mobile.no-flexbox.no-flexboxlegacy.no-flexboxtweener { height:auto; }
 /* No Flexbox (end) */
 
 
-
-/* Main Nav : Offcanvas pattern (start) */
-/*
-#header { width:240px; height:100%; max-width:240px; position:absolute; left:0; top:0; z-index:1; visibility:hidden; z-index:3; visibility:visible; -webkit-transform:translateX(-240px); -webkit-transition:.12s -webkit-transform ease-in-out; }
-#header.active { -webkit-transform:translateX(0); }
-#body { -webkit-transition:.12s -webkit-transform ease-in-out; -moz-transition:.24s -moz-transform ease-in-out; transition:.24s transform ease-in-out; -webkit-transform:translateX(0); -moz-transform:translateX(0); transform:translateX(0); z-index:2; }
-#header.active + #body { -webkit-transform:translateX(240px); -moz-transform:translateX(240px); -ms-transform:translateX(240px); transform:translateX(240px); }
-*/
-/* Main Nav : Offcanvas pattern (end) */
-
-
-/* Main Nav : Offcanvas pattern (start) */
-#header { width:100%; max-width:270px; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch; position:absolute; left:0; top:0; /*z-index:3;*/ }
-#body { min-height:100%; max-height:100%; z-index:2; }
-#header,
-#body,
-#basketSummary,
-.ui-dialog { -webkit-transition:.28s -webkit-transform cubic-bezier(0.000, 0.720, 0.320, 1.000); transition:.28s transform cubic-bezier(0.000, 0.720, 0.320, 1.000); }
-
-#header 								{ -webkit-transform:translateX(-270px); transform:translateX(-270px); }
-#header.active + #body,
-#header.active + #body #basketSummary,
-.ui-dialog.activeHeader 				{ -webkit-transform:translateX(270px); transform:translateX(270px); }
-#header.active 							{ -webkit-transform:translateX(0); transform:translateX(0); }
-
-.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body,
-.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header.active { left:0; }
-.no-flexbox.no-flexboxlegacy.no-flexboxtweener #header,
-.no-flexbox.no-flexboxlegacy.no-flexboxtweener #body.active { left:270px; }
-/* Main Nav : Offcanvas pattern (end) */
-
-
-
 /* Pages Transitions / Animations (start) */
 body { position:relative; }
 .page { position:absolute; top:0; bottom:0; left:0; right:0; }
 .gecko .page { transform:none; } /* Fix a bug where fixed positions are not correct when translate transforms are used */
-.page.animating { -webkit-transition:1s ease-out; transition:1s ease-out; -webkit-transition-property:-webkit-transform, opacity; transition-property:transform, opacity; }
+.page.animating { -webkit-transition:.5s ease-out; transition:.5s ease-out; -webkit-transition-property:-webkit-transform, opacity; transition-property:transform, opacity; }
 .page.current { z-index:1; }
 .page.off {  }
+
+
+.slideleftout.off 	{ -webkit-transform:translateX(0); transform:translateY(0); }
+.slideleftout 		{ -webkit-transform:translateX(-100%); transform:translateX(-100%); }
+
+.slideleftin.off 	{ -webkit-transform:translateX(100%); transform:translateX(100%); }
+.slideleftin 		{ -webkit-transform:translateX(0); transform:translateX(0); }
 
 .slideupin.off 		{ -webkit-transform:translateY(100%); transform:translateY(100%); z-index:1; }
 .slideupin 			{ -webkit-transform:translateY(0); transform:translateY(0); }

@@ -13,4 +13,4 @@ app.home =
 	{
 		return this;
 	}
-}
+};
